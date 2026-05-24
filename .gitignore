@@ -1,5 +1,11 @@
 venv/
 .env
+__pycache__/
+*.pyc
+.DS_Store
 dbt_project/logs/
+dbt_project/olist_dbt/logs/
+dbt_project/olist_dbt/target/
+dbt_project/olist_dbt/dbt_packages/
 dbt_project/olist_dbt/.user.yml
 dbt_project/olist_dbt/profiles.yml
