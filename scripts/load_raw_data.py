@@ -1,6 +1,9 @@
 import os
 import pandas as pd
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
+
+load_dotenv()
 
 def build_db_url():
     db_url = os.getenv("DB_URL")
