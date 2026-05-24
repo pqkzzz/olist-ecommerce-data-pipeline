@@ -9,3 +9,4 @@ dbt_project/olist_dbt/target/
 dbt_project/olist_dbt/dbt_packages/
 dbt_project/olist_dbt/.user.yml
 dbt_project/olist_dbt/profiles.yml
+logs/
