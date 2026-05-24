@@ -42,9 +42,8 @@ csv_tables = {
 }
 
 def create_schema():
-    with engine.connect() as conn:
+    with engine.begin() as conn:
         conn.execute(text("CREATE SCHEMA IF NOT EXISTS raw;"))
-        conn.commit()
 
 def load_csv(file_name, table_name):
     file_path = os.path.join(RAW_DATA_PATH, file_name)
@@ -53,16 +52,32 @@ def load_csv(file_name, table_name):
 
     df = pd.read_csv(file_path)
 
-    df.to_sql(
-        name=table_name,
-        con=engine,
-        schema="raw",
-        if_exists="replace",
-        index=False
-    )
+    with engine.begin() as conn:
+        table_exists = conn.execute(
+            text("""
+                SELECT EXISTS (
+                    SELECT FROM information_schema.tables
+                    WHERE table_schema = 'raw'
+                    AND table_name = :table_name
+                )
+            """),
+            {"table_name": table_name}
+        ).scalar()
+
+        if table_exists:
+            print(f"Truncating raw.{table_name}...")
+            conn.execute(text(f'TRUNCATE TABLE raw."{table_name}";'))
+
+        df.to_sql(
+            name=table_name,
+            con=conn,
+            schema="raw",
+            if_exists="append",
+            index=False
+        )
 
     print(f"Loaded {len(df)} rows into raw.{table_name}")
-
+    
 def main():
     create_schema()
 
