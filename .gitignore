@@ -1,0 +1,5 @@
+venv/
+.env
+dbt_project/logs/
+dbt_project/olist_dbt/.user.yml
+dbt_project/olist_dbt/profiles.yml

@@ -2,10 +2,25 @@ import os
 import pandas as pd
 from sqlalchemy import create_engine, text
 
-DB_URL = os.getenv(
-    "DB_URL",
-    "postgresql://admin:admin@localhost:5433/olist_dw"
-)
+def build_db_url():
+    db_url = os.getenv("DB_URL")
+    if db_url:
+        return db_url
+
+    host = os.getenv("DB_HOST")
+    user = os.getenv("DB_USER")
+    password = os.getenv("DB_PASSWORD")
+    port = os.getenv("DB_PORT", "5433")
+    dbname = os.getenv("DB_NAME", "olist_dw")
+
+    if not host or not user or not password:
+        raise RuntimeError(
+            "Set DB_URL or DB_HOST/DB_USER/DB_PASSWORD environment variables."
+        )
+
+    return f"postgresql://{user}:{password}@{host}:{port}/{dbname}"
+
+DB_URL = build_db_url()
 
 RAW_DATA_PATH = "data/raw"
 
