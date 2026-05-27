@@ -1,9 +1,5 @@
-version: "3.8"
-
 x-airflow-common: &airflow-common
   image: apache/airflow:2.10.5
-  env_file:
-    - .env
   environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow-postgres:5432/airflow
@@ -12,12 +8,12 @@ x-airflow-common: &airflow-common
 
     _PIP_ADDITIONAL_REQUIREMENTS: "pandas sqlalchemy psycopg2-binary python-dotenv dbt-postgres"
 
-    DB_HOST: ${DB_HOST:-postgres}
-    DB_PORT: ${DB_PORT:-5432}
-    DB_USER: ${DB_USER}
-    DB_PASSWORD: ${DB_PASSWORD}
-    DB_NAME: ${DB_NAME:-olist_dw}
-    DB_URL: ${DB_URL}
+    DB_HOST: postgres
+    DB_PORT: "5432"
+    DB_USER: admin
+    DB_PASSWORD: admin
+    DB_NAME: olist_dw
+    DB_URL: postgresql://admin:admin@postgres:5432/olist_dw
 
   volumes:
     - ./dags:/opt/airflow/dags
