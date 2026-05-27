@@ -42,13 +42,13 @@ with DAG(
         """,
     )
 
-    dbt_debug = BashOperator(
-        task_id="dbt_debug",
-        bash_command=f"""
-        cd {DBT_DIR}
-        dbt debug --profiles-dir .
-        """,
-    )
+    # dbt_debug = BashOperator(
+    #     task_id="dbt_debug",
+    #     bash_command=f"""
+    #     cd {DBT_DIR}
+    #     dbt debug --profiles-dir .
+    #     """,
+    # )
 
     dbt_run = BashOperator(
         task_id="dbt_run",
@@ -74,4 +74,4 @@ with DAG(
         """,
     )
 
-    check_project_files >> load_raw_data >> dbt_debug >> dbt_run >> dbt_test >> data_quality_check
+    check_project_files >> load_raw_data >> dbt_run >> dbt_test >> data_quality_check
