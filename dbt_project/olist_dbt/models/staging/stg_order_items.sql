@@ -6,4 +6,4 @@ SELECT
     shipping_limit_date::timestamp AS shipping_limit_date,
     price::numeric AS price,
     freight_value::numeric AS freight_value
-FROM raw.order_items
+FROM {{ source('raw', 'order_items') }}

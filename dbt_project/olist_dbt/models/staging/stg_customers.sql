@@ -4,4 +4,4 @@ SELECT
     customer_zip_code_prefix,
     LOWER(customer_city) AS customer_city,
     UPPER(customer_state) AS customer_state
-FROM raw.customers
+FROM {{ source('raw', 'customers') }}

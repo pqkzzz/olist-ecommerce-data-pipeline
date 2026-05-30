@@ -15,6 +15,6 @@ SELECT
     p.product_height_cm,
     p.product_width_cm
 
-FROM raw.products p
+FROM {{ source('raw', 'products') }} p
 LEFT JOIN raw.product_category_translation t
     ON p.product_category_name = t.product_category_name
