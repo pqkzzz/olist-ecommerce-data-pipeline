@@ -1,7 +1,7 @@
 SELECT
+    CONCAT(oi.order_id, '-', oi.order_item_id) AS order_item_key,
     oi.order_id,
     oi.order_item_id,
-
     o.customer_id,
     oi.product_id,
     oi.seller_id,
